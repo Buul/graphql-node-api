@@ -1,45 +1,99 @@
 import { makeExecutableSchema } from 'graphql-tools'
 
-const users: any[] = [
-    {
-        id: 1,
-        name: 'jon',
-        email: 'jon@emai.com'
-    },
-    {
-        id: 2,
-        name: 'Dany',
-        email: 'dany@emai.com'
-    }
-
-]
+const users:  any[] = [{
+    id: "1",
+    nome: 'José da Silva',
+    apelido: 'Zé',
+    cpf: '261.782.466-76',
+    rg: '44903548-3',
+    dtNasc: '28/07/1977',
+    cnh: '5478511112',
+    nacionalidade: 'Brasileiro',
+    sexo: 'Masculino',
+    celular: '11992548778',
+    paisNascimento: 'Brasil',
+    email: 'ze@email.com',
+    endereco: 'rua Leão de Roma',
+    numero: '121',
+    complemento: 'casa 2',
+    cep: '06224-080',
+    cidade: 'Paulistanópolis',
+    estado: 'São Paulo',
+    pais: 'Brasil',
+    statusConta: '1',
+    statusCadastro: '1',
+    pessoaPolititicExposta: '1',
+    declaracao: '1'
+},
+{
+    id: "2",
+    nome: 'José da Silva',
+    apelido: 'Zé',
+    cpf: '261.782.466-77',
+    rg: '44903548-3',
+    dtNasc: '28/07/1977',
+    cnh: '5478511112',
+    nacionalidade: 'Brasileiro',
+    sexo: 'Masculino',
+    celular: '11992548778',
+    paisNascimento: 'Brasil',
+    email: 'ze@email.com',
+    endereco: 'rua Leão de Roma',
+    numero: '121',
+    complemento: 'casa 2',
+    cep: '06224-080',
+    cidade: 'Paulistanópolis',
+    estado: 'São Paulo',
+    pais: 'Brasil',
+    statusConta: '1',
+    statusCadastro: '1',
+    pessoaPolititicExposta: '1',
+    declaracao: '1'
+}]
 
 const typeDefs = `
     type User {
         id: ID!
-        name: String!
+        nome: String!
+        apelido: String!    
+        cpf: String!
+        rg: String!
+        dtNasc: String!
+        cnh: String!
+        nacionalidade: String!
+        sexo: String!
+        celular: String!
+        paisNascimento: String!
         email: String!
+        endereco: String!
+        numero: String!
+        complemento: String!
+        cep: String!
+        cidade: String!
+        estado: String!
+        pais: String!
+        statusConta: String!
+        statusCadastro: String!
+        pessoaPolititicExposta: String!
+        declaracao:String!
     }
 
     type Query {
         allUsers: [User!]!
+        user(cpf: String!): [User!]!
     }
 
     type Mutation {
-        createUser(name: String!, email: String!): User
+        createUser(nome: String!, email: String!): User
     }
 `;
 
 const resolvers = {
-    //resolver triviais, não precisa emplementgar
-    User: {
-        id: (user) => user.id,
-        name: (user) => user.name,
-        email: (user) => user.email
-    },
     //
     Query: {
-        allUsers: () => users
+        allUsers: () => users,
+        user: (obj, args, context, info) => users.filter(
+            i => i.cpf === args.cpf)
     },
     Mutation: {
         createUser: (parent, args) => {
